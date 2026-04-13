@@ -20,6 +20,8 @@ import { MessageSkeleton } from "../ui/Skeleton";
 import MicButton from "../ui/MicButton";
 import MentionInput from "../ui/MentionInput";
 import StreamingMessage from "../ui/StreamingMessage";
+import { useSTT } from "../../hooks/useSTT";
+import TTSButton from "../ui/TTSButton";
 
 interface ChatInterfaceProps {
   userId: string;
@@ -50,6 +52,25 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [isFirstMessage, setIsFirstMessage] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Speech-to-Text hook for voice input
+  const {
+    isSupported: sttSupported,
+    isListening,
+    transcript,
+    interimTranscript,
+    error: sttError,
+    toggleListening,
+    resetTranscript,
+  } = useSTT({ lang: selectedLanguage === "en" ? "en-US" : selectedLanguage });
+
+  // Append STT transcript to input
+  useEffect(() => {
+    if (transcript) {
+      setInputValue((prev) => (prev ? `${prev} ${transcript}` : transcript));
+      resetTranscript();
+    }
+  }, [transcript, resetTranscript]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -737,11 +758,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
           {/* Voice Input Button */}
           <MicButton
-            onTranscript={(text) => {
-              setInputValue((prev) => (prev ? `${prev} ${text}` : text));
-            }}
-            disabled={isLoading}
+            isListening={isListening}
+            isSupported={sttSupported}
+            onClick={toggleListening}
+            error={sttError}
           />
+
+          {/* Show interim transcript indicator */}
+          {interimTranscript && (
+            <span className="text-xs text-orange-500 italic animate-pulse flex-shrink-0">
+              {interimTranscript.substring(0, 20)}...
+            </span>
+          )}
 
           {/* Send Button */}
           <button

@@ -5,6 +5,7 @@ import { LanguageCode } from "../config/constants";
 import { uploadController } from "./upload.controller";
 import { LMRHistoryModel } from "../models/lmr.model";
 import { SupportedLanguageCode } from "../services/language.service";
+import { documentClassifierService } from "../services/documentClassifier.service";
 
 export class LMRController {
   /**

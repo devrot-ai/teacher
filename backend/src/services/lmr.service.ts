@@ -5,6 +5,7 @@ import { nllbService } from "./nllb.service";
 import { languageService, SupportedLanguageCode } from "./language.service";
 import { LanguageCode, SUPPORTED_LANGUAGES } from "../config/constants";
 import { env } from "../config/env";
+import { documentClassifierService, ClassificationResult } from "./documentClassifier.service";
 
 // Enhanced key topic with description for quick recall
 export interface KeyTopic {
@@ -649,6 +650,12 @@ OUTPUT THE JSON NOW:`;
       const languageName = SUPPORTED_LANGUAGES[language];
 
       // ═══════════════════════════════════════════════════════════════
+      // SMART DOCUMENT CLASSIFICATION
+      // ═══════════════════════════════════════════════════════════════
+      const classification = documentClassifierService.classify(document.fullContent);
+      console.log(`📋 Document classified as: ${classification.label} (confidence: ${classification.confidence})`);
+
+      // ═══════════════════════════════════════════════════════════════
       // CALCULATE DOCUMENT METRICS FOR DYNAMIC CONTENT QUANTITIES
       // ═══════════════════════════════════════════════════════════════
       const metrics = this.calculateDocumentMetrics(
@@ -659,6 +666,7 @@ OUTPUT THE JSON NOW:`;
 
       // ═══════════════════════════════════════════════════════════════
       // LAYER 1: Compress document context for summary generation
+      // Use document-type-specific hints in the compression
       // ═══════════════════════════════════════════════════════════════
       console.log("🔄 Layer 1: Compressing document context...");
       const compressedContext = await this.compressContextForTask(
@@ -682,6 +690,9 @@ OUTPUT THE JSON NOW:`;
 
       const summarySchema = {
         description: `You are an NCERT/CBSE educational expert. Generate LAST-MINUTE REVISION content from the document.
+
+DOCUMENT TYPE: ${classification.label}
+SPECIAL INSTRUCTIONS: ${classification.generationStrategy.summaryPromptHint}
 
 MANDATORY COUNTS:
 • keyTopics: Generate EXACTLY ${keyTopicCount} topics with UNIQUE names from the document

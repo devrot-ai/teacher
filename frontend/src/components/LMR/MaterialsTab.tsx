@@ -1,5 +1,6 @@
 import React from "react";
 import { LMRSummary, KeyTopic, ImportantConcept } from "../../services/lmrApi";
+import TTSButton from "../ui/TTSButton";
 
 interface MaterialsTabProps {
   summary: LMRSummary | null;
@@ -96,9 +97,20 @@ const MaterialsTab: React.FC<MaterialsTabProps> = ({ summary, isLoading }) => {
                 </svg>
                 Last Minute Summary
               </h4>
-              <p className="text-sm text-gray-600 mt-1">
-                Generated in {summary.language} • Quick revision format
-              </p>
+              <div className="flex items-center gap-3 mt-1">
+                <p className="text-sm text-gray-600">
+                  Generated in {summary.language} • Quick revision format
+                </p>
+                <TTSButton
+                  text={[
+                    summary.introduction,
+                    ...(summary.summaryPoints || []),
+                    summary.conclusion,
+                  ].filter(Boolean).join(". ")}
+                  label="Listen"
+                  size="md"
+                />
+              </div>
             </div>
             <div className="p-6 space-y-4">
               {/* Introduction */}

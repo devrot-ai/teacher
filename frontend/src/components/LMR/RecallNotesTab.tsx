@@ -1,5 +1,6 @@
 import React from "react";
 import { LMRRecallNote } from "../../services/lmrApi";
+import TTSButton from "../ui/TTSButton";
 
 interface RecallNotesTabProps {
   recallNotes: LMRRecallNote[];
@@ -142,6 +143,14 @@ const RecallNotesTab: React.FC<RecallNotesTabProps> = ({
                   </span>
                 </div>
                 <h4 className="text-lg font-bold text-gray-800">{topicName}</h4>
+                <TTSButton
+                  text={[
+                    topicName,
+                    ...keyPoints.map((p, i) => `Point ${i+1}: ${p}`),
+                    ...quickFacts.map((f, i) => `Fact ${i+1}: ${f}`),
+                  ].join(". ")}
+                  size="sm"
+                />
               </div>
             </div>
 

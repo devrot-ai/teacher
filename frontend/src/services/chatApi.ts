@@ -565,45 +565,14 @@ export async function getAllUserFiles(
  */
 export async function generateChatName(firstMessage: string): Promise<string> {
   try {
-    // Use Gemini to generate a short, descriptive chat name
-    const prompt = `Generate a very short (2-5 words) title for a chat that starts with: "${firstMessage.substring(
-      0,
-      100
-    )}...". Only return the title, nothing else.`;
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY || ""
-      }`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: prompt }],
-            },
-          ],
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      // Fallback to truncated first message
-      return (
-        firstMessage.substring(0, 30) + (firstMessage.length > 30 ? "..." : "")
-      );
+    // Generate a short chat name from the first message (offline, no external API)
+    const words = firstMessage.trim().split(/\s+/).filter(w => w.length > 1);
+    if (words.length <= 5) {
+      return firstMessage.substring(0, 40) + (firstMessage.length > 40 ? "..." : "");
     }
-
-    const data = await response.json();
-    const generatedName =
-      data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-
-    return (
-      generatedName ||
-      firstMessage.substring(0, 30) + (firstMessage.length > 30 ? "..." : "")
-    );
+    // Take first 4-5 meaningful words as the chat name
+    const name = words.slice(0, 5).join(" ");
+    return name.substring(0, 40) + (name.length > 40 ? "..." : "");
   } catch (error) {
     // Fallback to truncated first message
     return (

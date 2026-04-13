@@ -16,6 +16,7 @@ import analyzeRoutes from "./routes/analyze.routes";
 import boardRoutes from "./routes/board.routes";
 import documentTreeRoutes from "./routes/documentTree.routes";
 import planRoutes from "./routes/plan.routes";
+import classifyRoutes from "./routes/classify.routes";
 
 const app = express();
 
@@ -77,6 +78,7 @@ app.use("/api/analyze", analyzeRoutes);
 app.use("/api/board", boardRoutes);
 app.use("/api/document-tree", documentTreeRoutes);
 app.use("/api/plan", planRoutes);
+app.use("/api/classify", classifyRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

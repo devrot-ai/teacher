@@ -1,5 +1,6 @@
 import React from "react";
 import { LMRQuestion } from "../../services/lmrApi";
+import TTSButton from "../ui/TTSButton";
 
 interface QuestionsTabProps {
   questions: LMRQuestion[];
@@ -91,6 +92,10 @@ const QuestionsTab: React.FC<QuestionsTabProps> = ({
                         Page {qa.pageReference}
                       </span>
                     )}
+                    <TTSButton
+                      text={`Question: ${qa.question}. Answer: ${qa.answer}`}
+                      size="sm"
+                    />
                   </div>
                 </div>
                 <div className="mb-4">

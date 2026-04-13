@@ -19,6 +19,7 @@ class SpeechService {
     private whisperPath: string;
     private modelPath: string;
     private tempDir: string;
+    private isAvailable: boolean = false;
 
     constructor() {
         // Paths for whisper.cpp binary and model
@@ -32,7 +33,32 @@ class SpeechService {
             fs.mkdirSync(this.tempDir, { recursive: true });
         }
 
+        // Check if whisper binary and model exist
+        if (fs.existsSync(this.whisperPath) && fs.existsSync(this.modelPath)) {
+            this.isAvailable = true;
+            console.log("✅ Whisper STT is available (local binary found)");
+        } else {
+            this.isAvailable = false;
+            console.warn("⚠️ Whisper STT not available - use browser Speech Recognition instead");
+            if (!fs.existsSync(this.whisperPath)) {
+                console.warn(`   Missing binary: ${this.whisperPath}`);
+            }
+            if (!fs.existsSync(this.modelPath)) {
+                console.warn(`   Missing model: ${this.modelPath}`);
+            }
+        }
+    }
 
+    /**
+     * Check if the speech service is available
+     */
+    checkAvailability(): { available: boolean; message: string } {
+        return {
+            available: this.isAvailable,
+            message: this.isAvailable
+                ? "Whisper STT is available"
+                : "Whisper STT not available. Use browser-native Speech Recognition (Web Speech API) instead.",
+        };
     }
 
     /**
