@@ -250,7 +250,7 @@ const SessionSidebar: React.FC<SessionSidebarProps> = ({
       {/* Footer - Compact */}
       <div className="p-2 border-t-2 border-orange-100 bg-orange-50/50 space-y-2">
         <a
-          href="https://github.com/ayuxy027/MasterG"
+          href="https://github.com/ayuxy027/Edubridge"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center w-full h-8 text-orange-600 hover:text-orange-700 hover:bg-orange-100 rounded-lg transition-all"

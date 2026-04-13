@@ -62,7 +62,7 @@ export const env: EnvConfig = {
   CHROMA_COLLECTION_NAME: "edu_notes",
 
   // MongoDB - Local database
-  MONGODB_URI: "mongodb://localhost:27017/masterg",
+  MONGODB_URI: "mongodb://localhost:27017/edubridge",
 
   // File Storage
   UPLOAD_DIR: "./uploads",

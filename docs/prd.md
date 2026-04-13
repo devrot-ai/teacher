@@ -1,7 +1,7 @@
-# MasterG - AI-Powered Multilingual Educational Platform
+# Edubridge - AI-Powered Multilingual Educational Platform
 
 ## Product Overview
-MasterG is an advanced multilingual educational platform that leverages AI to provide personalized learning experiences across 22 Indian languages. Built with a focus on accessibility and cultural relevance, it serves students in rural and resource-constrained environments.
+Edubridge is an advanced multilingual educational platform that leverages AI to provide personalized learning experiences across 22 Indian languages. Built with a focus on accessibility and cultural relevance, it serves students in rural and resource-constrained environments.
 
 ## Core Featuresupdate the navbar app.tsx
 

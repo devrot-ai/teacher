@@ -202,7 +202,7 @@ const PitchPage = () => {
           <div className="mb-8">
             <img
               src="/pitch/pitch.png"
-              alt="MasterG Team"
+              alt="Edubridge Team"
               className="mx-auto rounded-2xl shadow-2xl max-w-2xl w-full h-auto object-cover"
             />
           </div>
@@ -210,7 +210,7 @@ const PitchPage = () => {
             Hello Judges!
           </h1>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-orange-500/80 leading-tight">
-            We are the Creators of MasterG
+            We are the Creators of Edubridge
           </h2>
         </div>
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -338,7 +338,7 @@ const PitchPage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8">
-              Introducing MasterG
+              Introducing Edubridge
             </h2>
             <p className="text-2xl sm:text-3xl font-semibold text-gray-700 mb-4">
               Your Lightweight Growth Companion
@@ -475,7 +475,7 @@ const PitchPage = () => {
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-4 text-gray-400 text-sm font-mono">github.com/ayuxy027/MasterG</span>
+                <span className="ml-4 text-gray-400 text-sm font-mono">github.com/ayuxy027/Edubridge</span>
               </div>
               <div className="p-4">
                 <img

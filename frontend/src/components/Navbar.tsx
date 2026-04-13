@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({ alwaysVisible = false }) => {
         }`}
       >
         <a href="/" className="text-lg sm:text-xl md:text-2xl font-bold text-orange-500">
-          MasterG
+          Edubridge
         </a>
 
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-orange-500 text-sm font-medium">

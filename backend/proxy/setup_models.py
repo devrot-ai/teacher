@@ -1,5 +1,5 @@
 """
-MasterG model setup script for translation models.
+Edubridge model setup script for translation models.
 
 This script downloads translation models ONCE from Hugging Face Hub
 and saves them locally to backend/proxy/models/. After this initial download,
@@ -44,7 +44,7 @@ WEIGHT_FILES = ["pytorch_model.bin", "model.safetensors"]
 def setup_nllb() -> None:
   """Download NLLB-200 model if not already present"""
   print()
-  print("Setting up NLLB-200 for MasterG...")
+  print("Setting up NLLB-200 for Edubridge...")
   print("⚠️  ONE-TIME DOWNLOAD: This requires internet connection.")
   print("   After download, the model runs completely offline.")
   print()
@@ -113,7 +113,7 @@ def setup_models() -> None:
   MODELS_DIR.mkdir(parents=True, exist_ok=True)
   
   print("=" * 60)
-  print("MasterG Translation Model Setup (NLLB-200)")
+  print("Edubridge Translation Model Setup (NLLB-200)")
   print("=" * 60)
   print()
   
@@ -126,11 +126,11 @@ def setup_models() -> None:
   
   print()
   print("=" * 60)
-  print("✅ MasterG model setup complete!")
+  print("✅ Edubridge model setup complete!")
   print("=" * 60)
   print()
   print("NLLB-200 is now cached and will run offline.")
-  print("This is the only translation model used by MasterG.")
+  print("This is the only translation model used by Edubridge.")
 
 
 if __name__ == "__main__":

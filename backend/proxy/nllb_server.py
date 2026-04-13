@@ -1,5 +1,5 @@
 """
-Persistent NLLB-200 translation server for MasterG.
+Persistent NLLB-200 translation server for Edubridge.
 
 This server keeps the model loaded in memory and handles translation requests
 via stdin/stdout JSON protocol. This avoids reloading the 2.4GB model on each request.

@@ -173,7 +173,7 @@ const Landing = () => {
                         </h1>
 
                         <p className="text-gray-800 text-xs sm:text-sm md:text-lg lg:text-xl max-w-[90%] sm:max-w-[85%] md:max-w-[80%] mt-3 sm:mt-4 mx-auto px-4 sm:px-6 md:px-10 mb-6 sm:mb-8 leading-relaxed">
-                            Experience best in class Modern, lightweight, and AI enabled Learning Experience with MasterG.
+                            Experience best in class Modern, lightweight, and AI enabled Learning Experience with Edubridge.
                         </p>
 
                         {/* Buttons */}

@@ -11,11 +11,11 @@ const Banner: React.FC<BannerProps> = ({ isVisible = true }) => (
         }`}
     >
         <p className="flex-shrink-0">
-            <span className="hidden sm:inline">MasterG is 100% offline and needs local setup to be booted. </span>
+            <span className="hidden sm:inline">Edubridge is 100% offline and needs local setup to be booted. </span>
             <span className="sm:hidden">100% offline - needs local setup</span>
         </p>
         <a
-            href="https://github.com/ayuxy027/MasterG"
+            href="https://github.com/ayuxy027/Edubridge"
             className="flex items-center gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md text-orange-600 bg-white hover:bg-slate-50 transition-all active:scale-95 shadow-sm hover:shadow-md whitespace-nowrap"
             target="_blank"
             rel="noopener noreferrer"
