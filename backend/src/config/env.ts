@@ -88,7 +88,7 @@ export const env: EnvConfig = {
   GROQ_API_KEY: process.env.GROQ_API_KEY || "",
 
   // NLLB-200 Configuration (translation)
-  NLLB_ENABLED: true,
+  NLLB_ENABLED: false,
 
   // Python Executable
   PYTHON_EXECUTABLE: "python3",

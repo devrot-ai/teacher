@@ -107,7 +107,9 @@ class TextExtractorService {
             const mammoth = await import('mammoth');
             const buffer = await fs.readFile(filePath);
 
-            const result = await mammoth.extractRawText({ buffer });
+            // Handle both ESM and CommonJS imports
+            const mammothModule = mammoth.default || mammoth;
+            const result = await mammothModule.extractRawText({ buffer });
             const text = result.value;
 
             // Split into pages (approx 3000 chars each)
@@ -144,19 +146,19 @@ class TextExtractorService {
             // Dynamic import for officeparser
             const officeparser = await import('officeparser');
 
+            // Handle both ESM and CommonJS imports
+            const officeparserModule = officeparser.default || officeparser;
+
             // Use parseOfficeAsync (Promise-based API)
             let text: string;
 
-            if (typeof officeparser.parseOfficeAsync === 'function') {
+            if (typeof officeparserModule.parseOfficeAsync === 'function') {
                 // Modern API (v4+)
-                text = await officeparser.parseOfficeAsync(filePath);
-            } else if (typeof officeparser.default?.parseOfficeAsync === 'function') {
-                // ESM default export
-                text = await officeparser.default.parseOfficeAsync(filePath);
-            } else if (typeof officeparser.parseOffice === 'function') {
+                text = await officeparserModule.parseOfficeAsync(filePath);
+            } else if (typeof officeparserModule.parseOffice === 'function') {
                 // Legacy callback API - wrap in Promise
                 text = await new Promise<string>((resolve, reject) => {
-                    officeparser.parseOffice(filePath, (err: Error | null, data: string) => {
+                    officeparserModule.parseOffice(filePath, (err: Error | null, data: string) => {
                         if (err) reject(err);
                         else resolve(data || '');
                     });

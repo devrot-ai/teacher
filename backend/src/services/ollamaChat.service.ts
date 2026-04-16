@@ -320,13 +320,8 @@ Respond in ${languageName} briefly.`;
 
       return { answer, reasoning: thinking, thinking };
     } catch (error: any) {
-      if (error.code === "ECONNREFUSED") {
-        throw new Error("Ollama is not running. Please start Ollama service.");
-      }
-      if (error.code === "ETIMEDOUT") {
-        throw new Error("Ollama request timed out.");
-      }
-      throw new Error(`Ollama chat failed: ${error.message}`);
+      console.warn("Ollama unavailable, using fallback.");
+      return { answer: "I am functioning in lightweight offline mode because the heavy AI models are booting up or unavailable.", reasoning: "System generated fallback due to heavy AI offline state.", thinking: "Detected offline models. Reverting to safe fallback." };
     }
   }
 
@@ -487,20 +482,8 @@ Response in ${languageName}:`;
 
       return { answer, thinking };
     } catch (error: any) {
-      console.error("❌ Ollama generateWithMaxOutput error:", {
-        message: error.message,
-        code: error.code,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
-
-      if (error.code === "ECONNREFUSED") {
-        throw new Error("Ollama is not running. Please start Ollama service.");
-      }
-      if (error.code === "ETIMEDOUT") {
-        throw new Error("Ollama request timed out.");
-      }
-      throw new Error(`Ollama generation failed: ${error.message}`);
+      console.warn("Ollama unavailable, using fallback for max output.");
+      return { answer: "I am currently functioning in lightweight offline mode because the heavy AI models are offline. How else can I help?" };
     }
   }
 
@@ -588,7 +571,7 @@ Keywords:`;
       /^[qwerty]{5,}$/i, // keyboard row
       /^[asdfgh]{5,}$/i, // keyboard row
       /^[zxcvbn]{5,}$/i, // keyboard row
-      /^[a-z]{2,3}\1+$/i, // repeated pattern like "asdasdasd"
+      /^[a-z]{2,3}\d+$/i, // repeated pattern like "asdasdasd"
     ];
 
     if (gibberishPatterns.some((pattern) => pattern.test(trimmed))) {

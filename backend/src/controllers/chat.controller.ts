@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import { chatService } from "../services/chat.service";
 import { vectorDBService } from "../services/vectordb.service";
 import { asyncRAGOrchestratorService } from "../services/asyncRAGOrchestrator.service";
@@ -47,6 +48,27 @@ export class ChatController {
         res.status(400).json({
           success: false,
           error: "userId and sessionId are required",
+        });
+        return;
+      }
+
+      // Check MongoDB connection first
+      const isMongoConnected = mongoose.connection.readyState === 1;
+      if (!isMongoConnected) {
+        console.log(`📝 MongoDB not available - returning session details without persistence`);
+        res.status(200).json({
+          success: true,
+          session: {
+            sessionId,
+            messages: [],
+            chromaCollectionName: `chat_${userId}_${sessionId}`.replace(/[^a-zA-Z0-9_-]/g, "_"),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            language: "hi",
+            grade: "12",
+          },
+          files: [],
+          documentCount: 0,
         });
         return;
       }

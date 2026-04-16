@@ -11,6 +11,7 @@ import StitchPage from "./components/Stitch/StitchPage";
 import PlaygroundPage from "./pages/PlaygroundPage";
 import BenchmarksPage from "./pages/BenchmarksPage";
 import PitchPage from "./pages/PitchPage";
+import StudentToolsPage from "./components/StudentTools/StudentToolsPage";
 
 const RouteChangeTracker = () => {
   const location = useLocation();
@@ -68,6 +69,11 @@ const App = () => {
         </Layout>
       } />
       <Route path="/pitch" element={<PitchPage />} />
+      <Route path="/tools" element={
+        <Layout>
+          <StudentToolsPage />
+        </Layout>
+      } />
       </Routes>
     </>
   );

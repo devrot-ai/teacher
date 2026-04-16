@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["node"],
     "resolveJsonModule": true
   },
   "include": ["src/**/*"],

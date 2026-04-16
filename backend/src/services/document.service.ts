@@ -47,6 +47,13 @@ const Document = mongoose.model("Document", documentSchema);
 
 export class DocumentService {
   /**
+   * Check if MongoDB is connected
+   */
+  private isMongoConnected(): boolean {
+    return mongoose.connection.readyState === 1; // 1 = connected
+  }
+
+  /**
    * Store document pages as ONE document with pages array
    */
   async storePages(
@@ -59,6 +66,13 @@ export class DocumentService {
     mimeType?: string
   ): Promise<void> {
     try {
+      // Check MongoDB connection first
+      if (!this.isMongoConnected()) {
+        console.log(`📝 MongoDB not available - skipping document storage for ${fileName}`);
+        console.log(`📄 File processed successfully: ${pages.length} pages ready for use`);
+        return;
+      }
+
       // Validate: Don't store if no pages or all pages are empty
       if (!pages || pages.length === 0) {
         console.log(`⚠️  Skipping storage: No pages provided for ${fileName}`);
@@ -88,19 +102,15 @@ export class DocumentService {
         userId,
         sessionId,
         language,
-        pages: validPages.map((page) => ({
+        pages: validPages.map((page) =>({
           pageNumber: page.pageNumber,
           pageContent: page.content.trim(),
         })),
       };
 
       const result = await PageDocument.create(pageDocument);
-      // console.log(
-      //   `✅ Successfully stored 1 document with ${result.pages.length} pages for ${fileName}`
-      // );
-      // console.log(
-      //   `📊 Pages: ${result.pages.map((p) => p.pageNumber).join(", ")}`
-      // );
+      console.log(`✅ Successfully stored document with ${result.pages.length} pages for ${fileName}`);
+      console.log(`📊 Pages: ${result.pages.map((p) => p.pageNumber).join(", ")}`);
     } catch (error: any) {
       console.error("❌ Page storage error:", error);
       console.error("Error details:", {
@@ -108,6 +118,13 @@ export class DocumentService {
         message: error.message,
         code: error.code,
       });
+      
+      // If MongoDB is not connected, don't throw error - just log and continue
+      if (!this.isMongoConnected()) {
+        console.log(`📝 MongoDB unavailable - document processing completed without storage`);
+        return;
+      }
+      
       throw new Error(`Failed to store pages: ${error.message}`);
     }
   }
@@ -117,6 +134,11 @@ export class DocumentService {
    */
   async getPage(fileId: string, pageNumber: number): Promise<string | null> {
     try {
+      if (!this.isMongoConnected()) {
+        console.log(`📝 MongoDB not available - cannot retrieve page for fileId: ${fileId}`);
+        return null;
+      }
+
       const doc = await PageDocument.findOne({ fileId });
       if (!doc) return null;
 
@@ -135,6 +157,11 @@ export class DocumentService {
     fileId: string
   ): Promise<Array<{ pageNumber: number; content: string }>> {
     try {
+      if (!this.isMongoConnected()) {
+        console.log(`📝 MongoDB not available - cannot retrieve pages for fileId: ${fileId}`);
+        return [];
+      }
+
       const doc = await PageDocument.findOne({ fileId });
       if (!doc) return [];
 

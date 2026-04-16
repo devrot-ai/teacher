@@ -247,11 +247,34 @@ export class UploadController {
           : null,
       };
 
+      console.log("📤 Upload Response:", JSON.stringify(response, null, 2));
+
       console.log(
         `✅ Upload complete: ${file.originalname} - ${allChunks.length} chunks created`
       );
 
-      res.status(200).json(response);
+      // Validate response before sending
+      const validatedResponse = {
+        success: true,
+        fileId,
+        fileName: file.originalname,
+        chunksCreated: allChunks.length,
+        message: "File processed successfully",
+        fileUrl: `/api/files/${fileId}?userId=${encodeURIComponent(
+          userId
+        )}&sessionId=${encodeURIComponent(sessionId)}`,
+        mimeType: file.mimetype,
+        hasPreviewPdf: !!previewPdfPath,
+        previewUrl: previewPdfPath
+          ? `/api/files/${fileId}/preview?userId=${encodeURIComponent(
+              userId
+            )}&sessionId=${encodeURIComponent(sessionId)}`
+          : null,
+      };
+
+      console.log("📤 Upload Response:", JSON.stringify(validatedResponse, null, 2));
+      
+      res.status(200).json(validatedResponse);
     } catch (error) {
       console.error("❌ Upload controller error:", error);
 

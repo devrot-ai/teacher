@@ -42,6 +42,12 @@ export class GroqTranslationService {
 
     try {
       const apiKey = this.getApiKey();
+      
+      // If no API key available, use fallback translation
+      if (!apiKey) {
+        console.log('Using fallback translation method (no Groq API key)');
+        return await this.fallbackTranslate(text, sourceLanguage, targetLanguage);
+      }
 
       // Get language names for better prompts
       const sourceLangName = this.getLanguageName(sourceLanguage);
@@ -100,6 +106,7 @@ ${text}`,
 
       // Handle other errors
       console.error('Groq translation error:', error);
+      
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
           throw new Error('Groq API authentication failed. Please check your GROQ_API_KEY.');
